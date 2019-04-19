@@ -39,3 +39,7 @@ New-Item -Path HKCU:Software\Microsoft\Windows\CurrentVersion\Explorer\CabinetSt
 choco install -y notepad2
 choco install -y firefox --params 'l=en-US'
 choco install -y visualstudiocode
+
+# set default applications.
+choco install -y SetDefaultBrowser
+SetDefaultBrowser @((SetDefaultBrowser | Where-Object {$_ -like 'HKLM Firefox-*'}) -split ' ')
