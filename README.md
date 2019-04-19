@@ -5,9 +5,10 @@ You can move the cube around by using the arrow keys.
 # Vagrant Environment
 
 After a `vagrant up` you should have a VM with Unity installed. You still need to
-activate it by launching Unity from the Desktop shortcut.
+[activate](https://docs.unity3d.com/Manual/LicensesAndActivation.html) it by
+launching Unity from the Desktop shortcut.
 
-After Unity is activated, you can build `Cube.exe` from the command line with:
+After Unity is activated, you can build `Build\Cube.exe` from the command line with:
 
 ```powershell
 # build the project.
@@ -18,13 +19,21 @@ After Unity is activated, you can build `Cube.exe` from the command line with:
 #    You can do this in Unity, by selecting the File | Build Settings
 #    menu and clicking the "Add Open Scenes" button.
 # see https://docs.unity3d.com/Manual/CommandLineArguments.html
-u3d run -- `
+&'C:\Program Files\Unity\Editor\Unity.exe' `
     -batchmode `
     -quit `
-    -logFile Temp\build.log `
-    -buildWindows64Player "$PWD\Build\Cube.exe"
+    -logFile - `
+    -projectPath $PWD `
+    -buildWindows64Player "$PWD\Build\Cube.exe" `
+    | Out-String -Stream
 if ($LASTEXITCODE) {
-    Write-Output 'Build Failed. build.log:'
-    Get-Content Temp\build.log
+    throw "Build failed with exit code $LASTEXITCODE"
 }
 ```
+
+# Notes
+
+* To use unity from a non-administrator account you need to grant it the `Remote Enable` permission to the `ROOT\CIMV2` WMI namespace. For example, to run from Jenkins see [rgl/jenkins-vagrant](https://github.com/rgl/jenkins-vagrant/blob/master/windows/provision-unity.ps1) for more details.
+* To manage multiple Unity instances try to use one of:
+  * https://github.com/DragonBox/u3d
+  * https://github.com/Microsoft/unitysetup.powershell
