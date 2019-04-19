@@ -6,7 +6,7 @@ You can move the cube around by using the arrow keys.
 
 After a `vagrant up` you should have a VM with Unity installed. You still need to
 [activate](https://docs.unity3d.com/Manual/LicensesAndActivation.html) it by
-launching Unity from the Desktop shortcut.
+launching Unity Hub from the Desktop shortcut.
 
 After Unity is activated, you can build `Build\Cube.exe` from the command line with:
 
