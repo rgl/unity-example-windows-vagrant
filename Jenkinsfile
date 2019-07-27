@@ -29,7 +29,7 @@ pipeline {
                     Write-Output 'Compressing artifact...'
                     mkdir Artifacts -Force | Out-Null
                     Push-Location Build
-                    Compress-Archive * Artifacts/Cube.zip
+                    Compress-Archive * ../Artifacts/Cube.zip
                     Pop-Location
                     '''
             }
